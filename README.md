@@ -39,10 +39,39 @@ cumulative_return = daily_return.cumsum()
 
 收益不复利。当天 return 用 `daily pnl / daily gross exposure start`，总 return 用日 return 累计和。
 
-## 跑一个示例
+## Example 在哪里
+
+示例输入在：
+
+```text
+central_bt/examples/
+```
+
+先看数量目标示例：
+
+```text
+central_bt/examples/quantity_targets.csv
+central_bt/examples/ticker_returns.csv
+central_bt/examples/benchmark_returns.csv
+```
+
+`quantity_targets.csv` 是研究 runner 要交的目标数量，`ticker_returns.csv` 是价格数据，字段是 `Date,Ticker,Open,Close`。
+
+## 第一次准备环境
+
+从 repo 根目录运行：
 
 ```powershell
+py -3.10 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -U pip
 .\.venv\Scripts\python.exe -m pip install -e .
+```
+
+机器上已有 `.venv` 时，只需要跑最后一行安装当前包。
+
+## 跑数量目标示例
+
+```powershell
 .\.venv\Scripts\python.exe -B .\scripts\run_position_input_backtest.py `
   --positions .\central_bt\examples\quantity_targets.csv `
   --returns .\central_bt\examples\ticker_returns.csv `
@@ -54,9 +83,22 @@ cumulative_return = daily_return.cumsum()
   --open-slippage-bps 5
 ```
 
-输出目录里会有 `daily.csv`、`holdings.csv`、`metrics.csv`、`summary.json`、`report.md` 和 `report.html`。
+输出目录：
+
+```text
+output/examples/quantity_targets_backtest/
+```
+
+主要看这些文件：
+
+- `report.html`：给 PM/CIO 看的 HTML 报告。
+- `summary.json`：指标、输入口径和 artifact 清单。
+- `daily.csv`：日度收益、敞口、换手和 PnL 拆分。
+- `holdings.csv`：每天每个 ticker 的持仓和名义金额。
+- `metrics.csv`：展开后的指标表。
 
 ## 文档
 
+- `central_bt/examples/README.md`：更多输入格式示例。
 - `docs/STANDARD_BACKTEST_FRAMEWORK.md`：输入格式、PnL 口径、产物清单。
 - `docs/RESEARCH_METHODOLOGY_STANDARD.md`：feature、variant、scorecard、ledger 和升级流程。

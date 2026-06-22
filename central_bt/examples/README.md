@@ -2,6 +2,14 @@
 
 这里的 CSV 只用来说明交接格式。研究代码可以生成其中一种输入，再配一份 `Date,Ticker,Open,Close` 价格文件，交给框架生成报告。
 
+命令都从 repo 根目录运行。第一次使用时先准备环境：
+
+```powershell
+py -3.10 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -U pip
+.\.venv\Scripts\python.exe -m pip install -e .
+```
+
 ## 示例 1：数量目标
 
 输入：
